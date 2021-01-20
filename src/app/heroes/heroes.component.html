@@ -14,29 +14,9 @@
   </li>
 </ul>
 
-
-<!-- selectedHero is undefined by design. -->
-<!-- Binding expressions in the template that refer to properties of selectedHero—expressions like {{selectedHero.name}}
- must fail because there is no selected hero. -->
-<!-- The fix - hide empty details with *ngIf -->
-<!-- The component should only display the selected hero details if the selectedHero exists. -->
-<div *ngIf="selectedHero">
-  <h2>Hero Editor</h2>
-  <!-- UppercasePipe to show title in capital letters -->
-  <!-- The word uppercase in the interpolation binding, right after the pipe operator ( | ),
-  activates the built-in UppercasePipe. -->
-  <!-- https://angular.io/guide/pipes -->
-  <h3>{{selectedHero.name | uppercase}} Details</h3>
-  <div><span>id: </span>{{selectedHero.id}}</div>
-  <div>
-    <!-- Two-way binding -->
-    <!--  [(ngModel)] is Angular's two-way data binding syntax. -->
-    <!--  Here it binds the hero.name property to the HTML textbox so that data can flow in both directions:
-    from the hero.name property to the textbox, and
-    from the textbox back to the hero.name.-->
-    <label>name:
-      <input [(ngModel)]="selectedHero.name" placeholder="name"/>
-    </label>
-  </div>
-</div>
-
+<!--[hero]="selectedHero" is an Angular property binding.-->
+<!--It's a one way data binding from the selectedHero property of the HeroesComponent to the hero property of the target
+element, which maps to the hero property of the HeroDetailComponent.-->
+<!--Now when the user clicks a hero in the list, the selectedHero changes. When the selectedHero changes, the property
+binding updates hero and the HeroDetailComponent displays the new hero.-->
+<app-hero-detail [hero]="selectedHero"></app-hero-detail>
