@@ -10,5 +10,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']    // the location of the component's private CSS styles
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
+  public title = 'Tour of Heroes';
 }

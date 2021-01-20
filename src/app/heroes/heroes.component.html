@@ -3,26 +3,40 @@
 <ul class="heroes">
   <!-- The *ngFor is Angular's repeater directive. It repeats the
   host element (in this case "<li></li>") for each element in a list. -->
-  <li *ngFor="let hero of heroes">
+  <!-- (click) => example of Angular's event binding syntax.
+  The parentheses around click tell Angular to listen for the <li> element's click event.
+  When the user clicks in the <li>, Angular executes the onSelect(hero) expression. -->
+<!-- [class.selected] ==> add and remove a CSS class conditionally -->
+  <li *ngFor="let hero of heroes"
+      (click)="onSelect(hero)"
+      [class.selected]="hero === selectedHero">
     <span class="badge">{{hero.id}}</span> {{hero.name}}
   </li>
 </ul>
 
-<h2>Hero Editor</h2>
-<!-- UppercasePipe to show title in capital letters -->
-<!-- The word uppercase in the interpolation binding, right after the pipe operator ( | ),
-activates the built-in UppercasePipe. -->
-<!-- https://angular.io/guide/pipes -->
-<h3>{{heroDummy.name | uppercase}} Details</h3>
 
-<div><span>id: </span>{{heroDummy.id}}</div>
-<!--<div><span>name: </span>{{hero.name}}</div>-->
+<!-- selectedHero is undefined by design. -->
+<!-- Binding expressions in the template that refer to properties of selectedHero—expressions like {{selectedHero.name}}
+ must fail because there is no selected hero. -->
+<!-- The fix - hide empty details with *ngIf -->
+<!-- The component should only display the selected hero details if the selectedHero exists. -->
+<div *ngIf="selectedHero">
+  <h2>Hero Editor</h2>
+  <!-- UppercasePipe to show title in capital letters -->
+  <!-- The word uppercase in the interpolation binding, right after the pipe operator ( | ),
+  activates the built-in UppercasePipe. -->
+  <!-- https://angular.io/guide/pipes -->
+  <h3>{{selectedHero.name | uppercase}} Details</h3>
+  <div><span>id: </span>{{selectedHero.id}}</div>
+  <div>
+    <!-- Two-way binding -->
+    <!--  [(ngModel)] is Angular's two-way data binding syntax. -->
+    <!--  Here it binds the hero.name property to the HTML textbox so that data can flow in both directions:
+    from the hero.name property to the textbox, and
+    from the textbox back to the hero.name.-->
+    <label>name:
+      <input [(ngModel)]="selectedHero.name" placeholder="name"/>
+    </label>
+  </div>
+</div>
 
-<!-- Two-way binding -->
-<!--  [(ngModel)] is Angular's two-way data binding syntax. -->
-<!--  Here it binds the hero.name property to the HTML textbox so that data can flow in both directions:
-from the hero.name property to the textbox, and
-from the textbox back to the hero.name.-->
-<div><label>name:
-  <input [(ngModel)]="heroDummy.name" placeholder="name"/>
-</label></div>
