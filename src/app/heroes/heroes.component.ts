@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Hero } from '../hero';   // import the Hero interface
+import { HEROES } from '../mock-heroes';
 
 @Component({
   // The CSS element selector, 'app-heroes', matches the name of the HTML element that identifies this component
@@ -13,13 +14,15 @@ import { Hero } from '../hero';   // import the Hero interface
 })
 export class HeroesComponent implements OnInit {
 
-  // hero = 'Windstorm';
-
   // implementation of type Hero interface
-  hero: Hero = {
+  heroDummy: Hero = {
     id: 1,
     name: 'Windstorm'
   };
+
+  heroes = HEROES;
+
+
 
   constructor() { }
 
