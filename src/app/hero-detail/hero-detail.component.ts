@@ -14,7 +14,8 @@ export class HeroDetailComponent implements OnInit {
   // This component simply receives a hero object through its hero property and displays it.
 
 
-  @Input() hero: Hero | undefined;  // allow hero to be imported elsewhere
+  @Input()
+  public hero: Hero | undefined;  // allow hero to get input data form the parent component's template
 
   constructor() { }
 

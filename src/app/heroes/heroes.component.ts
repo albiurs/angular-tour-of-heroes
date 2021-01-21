@@ -16,7 +16,7 @@ export class HeroesComponent implements OnInit {
 
   // == fields ==
 
-  public heroes = HEROES;   // declare & init HEROES mock
+  public heroes = HEROES;   // HEROES mock
 
   // implementation of single hero of type Hero interface
   // heroDummy: Hero = {
