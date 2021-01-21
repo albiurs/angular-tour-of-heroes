@@ -1,7 +1,7 @@
 import { Hero } from './hero';
 
 /**
- * HEROES mock of Hero objects
+ * HEROES mock array of Hero objects
  */
 export const HEROES: Hero[] = [
   { id: 11, name: 'Dr Nice' },
