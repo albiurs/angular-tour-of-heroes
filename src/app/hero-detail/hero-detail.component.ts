@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Input } from '@angular/core';  // to import this component elsewhere
+import { Input } from '@angular/core';  // allow hero to get input data form the parent component's template
 
 import { Hero } from '../hero';
 
@@ -14,8 +14,8 @@ export class HeroDetailComponent implements OnInit {
   // This component simply receives a hero object through its hero property and displays it.
 
 
-  @Input()
-  public hero: Hero | undefined;  // allow hero to get input data form the parent component's template
+  @Input()  // allow hero to get input data form the parent component's template
+  public hero: Hero | undefined;
 
   constructor() { }
 
