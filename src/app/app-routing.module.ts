@@ -14,6 +14,7 @@ import { RouterModule, Routes } from '@angular/router'; // import RouterModule a
 
 // HeroesComponent will give the Router somewhere to go once you configure the routes
 import { HeroesComponent } from './heroes/heroes.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 
 /*
@@ -24,8 +25,13 @@ A typical Angular Route has two properties:
     - path: a string that matches the URL in the browser address bar.
     - component: the component that the router should create when navigating to this route.
 
+path: ''
+This route redirects a URL that fully matches the empty path to the route whose path is '/dashboard'.
+After the browser refreshes, the router loads the DashboardComponent and the browser address bar shows the /dashboard URL.
  */
 const routes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },  // make the app navigate to the dashboard automatically
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'heroes', component: HeroesComponent }
 ];
 
