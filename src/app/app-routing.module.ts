@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router'; // import RouterModule a
 // HeroesComponent will give the Router somewhere to go once you configure the routes
 import { HeroesComponent } from './heroes/heroes.component';
 
+
 /*
 configure your routes
 Routes tell the Router which view to display when a user clicks a link or pastes a URL into the browser address bar.
@@ -20,6 +21,15 @@ const routes: Routes = [
   { path: 'heroes', component: HeroesComponent }
 ];
 
+
+/*
+RouterModule.forRoot()
+The @NgModule metadata initializes the router and starts it listening for browser location changes.
+The following line adds the RouterModule to the AppRoutingModule imports array
+and configures it with the routes in one step by calling RouterModule.forRoot().
+
+Next, AppRoutingModule exports RouterModule so it will be available throughout the app.
+ */
 @NgModule({
   imports: [
     // CommonModule,
