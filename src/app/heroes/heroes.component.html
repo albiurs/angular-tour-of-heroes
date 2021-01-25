@@ -7,10 +7,11 @@
   The parentheses around click tell Angular to listen for the <li> element's click event.
   When the user clicks in the <li>, Angular executes the onSelect(hero) expression. -->
 <!-- [class.selected] ==> add and remove a CSS class conditionally -->
-  <li *ngFor="let hero of heroes"
-      (click)="onSelect(hero)"
-      [class.selected]="hero === selectedHero">
-    <span class="badge">{{hero.id}}</span> {{hero.name}}
+<!--  <li *ngFor="let hero of heroes" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">-->
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">{{hero.id}}</span> {{hero.name}}
+    </a>
   </li>
 </ul>
 
@@ -19,4 +20,4 @@
 element, which maps to the hero property of the HeroDetailComponent.-->
 <!--Now when the user clicks a hero in the list, the selectedHero changes. When the selectedHero changes, the property
 binding updates hero and the HeroDetailComponent displays the new hero.-->
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+<!--<app-hero-detail [hero]="selectedHero"></app-hero-detail>-->

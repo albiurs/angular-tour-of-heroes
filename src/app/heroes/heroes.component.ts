@@ -26,7 +26,9 @@ export class HeroesComponent implements OnInit {
   //   id: 1,
   //   name: 'Windstorm'
   // };
-  public selectedHero: Hero | undefined;
+
+  // cleaned up:
+  // public selectedHero: Hero | undefined;
 
   public constructor(
     // The parameter simultaneously defines a private heroService property and identifies it as a HeroService injection site.
@@ -62,11 +64,14 @@ export class HeroesComponent implements OnInit {
     this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
-  public onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-
-    // add message each time a Hero is selected
-    this.messageService.add(`HeroesComponent: Selected Hero id=${hero.id}`);
-  }
+  /*
+  Method cleaned up
+   */
+  // public onSelect(hero: Hero): void {
+  //   this.selectedHero = hero;
+  //
+  //   // add message each time a Hero is selected
+  //   this.messageService.add(`HeroesComponent: Selected Hero id=${hero.id}`);
+  // }
 
 }
