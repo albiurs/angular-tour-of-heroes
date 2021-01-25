@@ -1,3 +1,11 @@
+/*
+app-routing.module.ts created by:
+$ ng generate module app-routing --flat --module=app
+
+--flat puts the file in src/app instead of its own folder.
+--module=app tells the CLI to register it in the imports array of the AppModule.
+ */
+
 import { NgModule } from '@angular/core';
 // Notice that the CommonModule references and declarations array are unnecessary, so are no longer part of AppRoutingModule. The following
 // sections explain the rest of the AppRoutingModule in more detail.
