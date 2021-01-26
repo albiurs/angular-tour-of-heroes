@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,17 +11,17 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 // The most important @NgModule decorator
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeroesComponent,
-    HeroDetailComponent,
-    MessagesComponent,
-    DashboardComponent
-  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
+  ],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    HeroesComponent,
+    HeroDetailComponent,
+    MessagesComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
