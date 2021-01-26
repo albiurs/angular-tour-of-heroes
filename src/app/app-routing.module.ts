@@ -12,9 +12,10 @@ import { NgModule } from '@angular/core';
 // import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router'; // import RouterModule and Routes so the app can have routing functionality
 
+import { DashboardComponent } from './dashboard/dashboard.component';
 // HeroesComponent will give the Router somewhere to go once you configure the routes
 import { HeroesComponent } from './heroes/heroes.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
 
 /*
@@ -32,7 +33,8 @@ After the browser refreshes, the router loads the DashboardComponent and the bro
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },  // make the app navigate to the dashboard automatically
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'heroes', component: HeroesComponent }
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'detail/:id', component: HeroDetailComponent} // The colon (:) indicates that :id is a placeholder for a specific hero id.
 ];
 
 
