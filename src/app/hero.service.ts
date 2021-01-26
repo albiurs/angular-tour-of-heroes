@@ -48,11 +48,12 @@ out not to be used after all.
 })
 export class HeroService {
 
+  /*
+  messageService
+  This is a typical "service-in-service" scenario: you inject the MessageService into the HeroService
+  which is injected into the HeroesComponent.
+  */
   constructor(
-    /*
-    This is a typical "service-in-service" scenario: you inject the MessageService into the HeroService
-    which is injected into the HeroesComponent.
-     */
     private messageService: MessageService
   ) { }
 
@@ -64,5 +65,16 @@ export class HeroService {
     // TODO: send the message _after_ fetching the heroes
     this.messageService.add('HeroService: fetched heroes');
     return of(HEROES);  // of(HEROES) returns an Observable<Hero[]> that emits a single value, the array of mock heroes.
+  }
+
+  getHero(id: number | undefined): Observable<Hero> | undefined {
+    // TODO: send the message _after_ fetching the hero
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    // const hero: Hero | undefined = HEROES.find(el => el.id === id);
+
+    // !!!Workaround!!!
+    // @ts-ignore
+    // return of(hero);
+    return of(HEROES.find(hero => hero.id === id));
   }
 }
