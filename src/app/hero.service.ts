@@ -2,6 +2,35 @@ import { Injectable } from '@angular/core';
 // getting data from the server with the RxJS of() function: https://rxjs.dev/
 import { Observable, of } from 'rxjs';
 
+/*
+HttpClient
+----------
+HttpClient methods return one value
+
+All HttpClient methods return an RxJS Observable of something.
+
+HTTP is a request/response protocol. You make a request, it returns a single response.
+
+In general, an observable can return multiple values over time. An observable from HttpClient always emits a single value and then
+completes, never to emit again.
+
+This particular HttpClient.get() call returns an Observable<Hero[]>; that is, "an observable of hero arrays". In practice, it will only
+return a single hero array.
+HttpClient.get() returns response data
+
+HttpClient.get() returns the body of the response as an untyped JSON object by default. Applying the optional type specifier, <Hero[]> ,
+adds TypeScript capabilities, which reduce errors during compile time.
+
+The server's data API determines the shape of the JSON data. The Tour of Heroes data API returns the hero data as an array.
+
+Other APIs may bury the data that you want within an object. You might have to dig that data out by processing the Observable result with
+the RxJS map() operator.
+
+Although not discussed here, there's an example of map() in the getHeroNo404() method included in the sample source code.
+
+ */
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Hero } from './hero';
 import { HEROES } from './mock-heroes';
 import { MessageService } from './message.service';
@@ -48,12 +77,15 @@ out not to be used after all.
 })
 export class HeroService {
 
+  private heroesUrl = 'api/heroes';  // URL to web api
+
   /*
   messageService
   This is a typical "service-in-service" scenario: you inject the MessageService into the HeroService
   which is injected into the HeroesComponent.
   */
   constructor(
+    private http: HttpClient,
     private messageService: MessageService
   ) { }
 
@@ -64,17 +96,28 @@ export class HeroService {
   getHeroes(): Observable<Hero[]> {
     // TODO: send the message _after_ fetching the heroes
     this.messageService.add('HeroService: fetched heroes');
-    return of(HEROES);  // of(HEROES) returns an Observable<Hero[]> that emits a single value, the array of mock heroes.
+
+    // get heroes form the mock
+    // return of(HEROES);  // of(HEROES) returns an Observable<Hero[]> that emits a single value, the array of mock heroes.
+
+    // GET heroes from the server
+    return this.http.get<Hero[]>(this.heroesUrl);
   }
 
   getHero(id: number | undefined): Observable<Hero> | undefined {
     // TODO: send the message _after_ fetching the hero
-    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    this.log(`fetched hero id=${id}`);
+
     // const hero: Hero | undefined = HEROES.find(el => el.id === id);
+    // return of(hero);
 
     // !!!Workaround!!!
     // @ts-ignore
-    // return of(hero);
     return of(HEROES.find(hero => hero.id === id));
+  }
+
+  /** Log a HeroService message with the MessageService */
+  private log(message: string): void {
+    this.messageService.add(`HeroService: ${message}`);
   }
 }

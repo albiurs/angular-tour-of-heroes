@@ -30,7 +30,7 @@ The .forRoot() configuration method takes an InMemoryDataService class that prim
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService,
-      { dataEncapsulation: true }
+      { dataEncapsulation: false }
     )
   ],
   declarations: [
