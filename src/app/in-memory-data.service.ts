@@ -15,6 +15,12 @@ export class InMemoryDataService {
 
   constructor() { }
 
+  /**
+   * createDB()
+   * "heroes" will result in the API endpoint:
+   * /api/heroes
+   * => {[array_of_hero_objects]}
+   */
   public createDb(): object {
     const heroes = [
       { id: 11, name: 'Dr Nice' },

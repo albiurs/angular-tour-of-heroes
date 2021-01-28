@@ -110,6 +110,7 @@ export class HeroService {
 
 
   /**
+   * getHeroes()
    * GET heroes from the server
    */
   /*
@@ -123,6 +124,9 @@ export class HeroService {
   They'll do that with the RxJS tap() operator, which looks at the observable values, does something with those values, and passes them
   along. The tap() call back doesn't touch the values themselves.
   Here is the final version of getHeroes() with the tap() that logs the operation.
+
+  catchError()
+  The catchError() operator intercepts an Observable that failed. The operator then passes the error to the error handling function.
    */
   getHeroes(): Observable<Hero[]> {
     // direct log to messageService
@@ -135,23 +139,48 @@ export class HeroService {
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
         tap(_ => this.log('fetched heroes')),
-        catchError(this.handleError<Hero[]>('getHeroes', []))
+        catchError(this.handleError<Hero[]>('getHeroes()', []))
       );
   }
 
+  /**
+   * getHero()
+   * GET hero by id. Will 404 if id not found
+   * @param id  id of the Hero object
+   */
+  /*
+  Get hero by id
+
+  Most web APIs support a get by id request in the form :baseURL/:id.
+
+  Here, the base URL is the heroesURL defined in the Heroes and HTTP section (api/heroes) and id is the number of the hero that you want to
+  retrieve. For example, api/heroes/11.
+
+  Update the HeroService getHero() method with the following to make that request:
+   */
   getHero(id: number | undefined): Observable<Hero> | undefined {
-    // TODO: send the message _after_ fetching the hero
-    this.log(`fetched hero id=${id}`);
+    // this.log(`fetched hero id=${id}`);
 
     // const hero: Hero | undefined = HEROES.find(el => el.id === id);
     // return of(hero);
 
+    // get the Hero from the mock
     // !!!Workaround!!!
     // @ts-ignore
-    return of(HEROES.find(hero => hero.id === id));
+    // return of(HEROES.find(hero => hero.id === id));
+
+    // get the Hero from the API
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.get<Hero>(url).pipe(
+      tap(_ => this.log(`fetched hero id=${id}`)),
+      catchError(this.handleError<Hero>(`getHero(id=${id})`))
+    );
   }
 
+
   /**
+   * handleError<T>()
+   *
    * Handle Http operation that failed.
    * Let the app continue.
    *
@@ -160,6 +189,13 @@ export class HeroService {
    *
    * Because each service method returns a different kind of Observable result, handleError() takes a type parameter so it can return the
    * safe value as the type that the app expects.
+   *
+   * The following handleError() method reports the error and then returns an innocuous result so that the application keeps working.
+   *
+   * The following handleError() will be shared by many HeroService methods so it's generalized to meet their different needs.
+   *
+   * Instead of handling the error directly, it returns an error handler function to catchError that it has configured with both the name
+   * of the operation that failed and a safe return value.
    *
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
