@@ -16,7 +16,7 @@ import { HeroService } from '../hero.service';
 export class HeroDetailComponent implements OnInit {
 
   // @Input()  // allow hero to get input data form the parent component's template
-  public hero: Hero | undefined;
+  public hero: Hero = { id: -1, name: ''};
 
   constructor(
     private route: ActivatedRoute,

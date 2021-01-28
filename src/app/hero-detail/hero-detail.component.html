@@ -17,7 +17,7 @@ activates the built-in UppercasePipe. -->
 <!--  Here it binds the hero.name property to the HTML textbox so that data can flow in both directions:
 from the hero.name property to the textbox, and
 from the textbox back to the hero.name.-->
-<div *ngIf="hero">
+<div *ngIf="hero && hero.id != -1">
   <h2>Hero Editor</h2>
   <h3>{{hero.name | uppercase}} Details</h3>
   <div><span>id: </span>{{hero.id}}</div>
@@ -30,4 +30,3 @@ from the textbox back to the hero.name.-->
   <button (click)="goBack()">go back</button>
   <button (click)="save()">save</button>
 </div>
-

@@ -190,6 +190,27 @@ export class HeroService {
 
   // == save methods ==
   /**
+   * addHero()
+   *
+   * POST: add a new hero to the server
+   *
+   * addHero() differs from updateHero() in two ways:
+   *
+   * It calls HttpClient.post() instead of put().
+   * It expects the server to generate an id for the new hero, which it returns
+   * in the Observable<Hero> to the caller.
+   *
+   * @param hero  New Hero object to be added to the Heroes list.
+   */
+  public addHero(hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap((newHero: Hero) => this.log(`added hero \w id=${hero.id}`)),
+      catchError(this.handleError('addHero()'))
+    );
+  }
+
+
+  /**
    * updateHero()
    * Uses http.put() to persist the changed hero on the server.
    *
