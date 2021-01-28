@@ -94,6 +94,16 @@ export class HeroService {
   private heroesUrl = 'api/heroes';  // URL to web api
 
   /*
+  The heroes web API expects a special header in HTTP save requests.
+  That header is in the httpOptions constant defined in the HeroService.
+   */
+  httpOptions = {
+    headers: new HttpHeaders(
+      {'Content-Type': 'application/json'}
+    )
+  };
+
+  /*
   messageService
   This is a typical "service-in-service" scenario: you inject the MessageService into the HeroService
   which is injected into the HeroesComponent.
@@ -158,7 +168,7 @@ export class HeroService {
 
   Update the HeroService getHero() method with the following to make that request:
    */
-  getHero(id: number | undefined): Observable<Hero> | undefined {
+  getHero(id: number): Observable<Hero> {
     // this.log(`fetched hero id=${id}`);
 
     // const hero: Hero | undefined = HEROES.find(el => el.id === id);
@@ -174,6 +184,31 @@ export class HeroService {
     return this.http.get<Hero>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero(id=${id})`))
+    );
+  }
+
+
+  // == save methods ==
+  /**
+   * updateHero()
+   * Uses http.put() to persist the changed hero on the server.
+   *
+   * The HttpClient.put() method takes three parameters:
+   * - the URL
+   * - the data to update (the modified hero in this case)
+   * - options
+   *
+   * The URL is unchanged. The heroes web API knows which hero to update by looking at the hero's id.
+   *
+   * The heroes web API expects a special header in HTTP save requests.
+   * That header is in the httpOptions constant defined in the HeroService.
+   *
+   * @param hero  Hero object
+   */
+  updateHero(hero: Hero): Observable<object> {
+    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap(_ => this.log(`updated Hero id=${hero.id}`)),
+      catchError(this.handleError('updateHero(hero: Hero)'))
     );
   }
 
