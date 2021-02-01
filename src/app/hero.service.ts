@@ -226,12 +226,57 @@ export class HeroService {
    *
    * @param hero  Hero object
    */
-  updateHero(hero: Hero): Observable<object> {
+  public updateHero(hero: Hero): Observable<object> {
     return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
       tap(_ => this.log(`updated Hero id=${hero.id}`)),
       catchError(this.handleError('updateHero(hero: Hero)'))
     );
   }
+
+
+  /**
+   * deleteHero()
+   *
+   * DELETE: delete the hero from the server
+   *
+   * Note the following key points:
+   * - deleteHero() calls HttpClient.delete().
+   * - The URL is the heroes resource URL plus the id of the hero to delete.
+   * - You don't send data as you did with put() and post().
+   * - You still send the httpOptions.
+   */
+  public deleteHero(hero: Hero | number): Observable<Hero> {
+    const id = typeof hero === 'number' ? hero : hero.id;
+    const url = `${this.heroesUrl}/${id}`;
+
+    return this.http.delete<Hero>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`deleted Hero id=${id}`)),
+      catchError(this.handleError<Hero>('deleteHero(hero: Hero | number)'))
+    );
+  }
+
+
+  /**
+   * searchHeroes()
+   *
+   *  GET heroes whose name contains search term
+   *
+   *  The method returns immediately with an empty array if there is no search term. The rest of it closely resembles getHeroes(), the only
+   *  significant difference being the URL, which includes a query string with the search term.
+   */
+  public searchHeroes(term: string): Observable<Hero[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+      tap(x => x.length ?
+        this.log(`found heroes matching "${term}"`) :
+        this.log(`no heroes matching "${term}"`)),
+      catchError(this.handleError<Hero[]>('searchHeroes', []))
+    );
+  }
+
 
 
   /**
