@@ -18,7 +18,7 @@ import { MessageService } from '../message.service';
 export class HeroesComponent implements OnInit {
 
   // public heroes = HEROES;   // HEROES mock
-  public heroes: Hero[] | undefined;  // access HEROES mock through the HeroService
+  public heroes: Hero[] = [];  // access HEROES mock through the HeroService
 
   // implementation of single hero of type Hero interface
   // heroDummy: Hero = {
@@ -73,5 +73,51 @@ export class HeroesComponent implements OnInit {
   //   // add message each time a Hero is selected
   //   this.messageService.add(`HeroesComponent: Selected Hero id=${hero.id}`);
   // }
+
+
+  /**
+   * add()
+   * In response to a click event, call the component's click handler, add(), and
+   * then clear the input field so that it's ready for another name.
+   *
+   * When the given name is non-blank, the handler creates a Hero-like object from
+   * the name (it's only missing the id) and passes it to the services addHero() method.
+   *
+   * When addHero() saves successfully, the subscribe() callback receives the new
+   * hero and pushes it into to the heroes list for display.
+   *
+   * @param name  Name of the new Hero
+   */
+  public add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.heroService.addHero({ name } as Hero)
+      .subscribe(hero => {
+        this.heroes.push(hero);
+      });
+  }
+
+
+  /**
+   * delete()
+   *
+   * Although the component delegates hero deletion to the HeroService, it remains responsible for updating its own list of heroes. The
+   * component's delete() method immediately removes the hero-to-delete from that list, anticipating that the HeroService will succeed on
+   * the server.
+   *
+   * There's really nothing for the component to do with the Observable returned by heroService.delete() but it must subscribe anyway.
+   *
+   * If you neglect to subscribe(), the service will not send the delete request to the server. As a rule, an Observable does nothing until
+   * something subscribes.
+   *
+   * Confirm this for yourself by temporarily removing the subscribe(), clicking "Dashboard", then clicking "Heroes". You'll see the full
+   * list of heroes again.
+   *
+   * @param hero  Hero object to be deleted
+   */
+  public delete(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }
 
 }
